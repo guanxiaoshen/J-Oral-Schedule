@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="日语口语强化培训周课表预约工作台。">
+  <title>日语口语强化培训 · 欢迎页</title>
+  <style>
+    :root {
+      --ink: #243244;
+      --muted: #718096;
+      --line: #dfe6ee;
+      --blue-deep: #3c6d98;
+      --mint: #b8dbc8;
+      --mint-deep: #5f967f;
+      --paper: #fffdf9;
+      --panel: rgba(255, 253, 249, 0.9);
+      --shadow: 0 18px 50px rgba(74, 92, 117, 0.12);
+      --soft-shadow: 0 8px 20px rgba(74, 92, 117, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 20px;
+      background: #edf3f5;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "Source Han Sans SC", "Avenir Next", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 86% 8%, rgba(184, 219, 200, 0.38), transparent 27rem),
+        linear-gradient(145deg, rgba(255, 253, 249, 0.95), rgba(231, 241, 244, 0.9)),
+        repeating-linear-gradient(0deg, rgba(106, 137, 156, 0.035) 0, rgba(106, 137, 156, 0.035) 1px, transparent 1px, transparent 5px);
+      scroll-snap-type: y proximity;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(1260px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 26px 0 48px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .wordmark-mark {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #9bc8b5;
+      border-radius: 9px;
+      color: #477763;
+      background: #e5f3ec;
+      font-family: Georgia, serif;
+      font-size: 17px;
+    }
+
+    .nav-link {
+      color: var(--blue-deep);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .welcome {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, 0.82fr);
+      align-items: center;
+      column-gap: clamp(24px, 5vw, 64px);
+      row-gap: clamp(14px, 3vh, 28px);
+      align-content: space-between;
+      min-height: calc(100svh - 78px);
+      padding: clamp(28px, 6vh, 48px) 0 clamp(68px, 10vh, 88px);
+      scroll-snap-align: start;
+    }
+
+    .kicker {
+      margin: 0 0 11px;
+      color: var(--blue-deep);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+    }
+
+    h1,
+    h2,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+    }
+
+    h1 {
+      max-width: 680px;
+      margin-bottom: 14px;
+      font-size: clamp(38px, 6vw, 76px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.13;
+    }
+
+    .welcome-copy {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      color: var(--blue-deep);
+      font-size: 11px;
+      font-weight: 800;
+      text-decoration: none;
+      transform: translateX(-50%);
+    }
+
+    .scroll-cue-arrow {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(119, 170, 152, 0.55);
+      border-radius: 50%;
+      color: var(--mint-deep);
+      background: rgba(255, 253, 249, 0.72);
+      box-shadow: 0 6px 15px rgba(74, 92, 117, 0.1);
+      font-size: 20px;
+      line-height: 1;
+      animation: scroll-cue-bounce 1800ms ease-in-out infinite;
+    }
+
+    .scroll-cue:hover .scroll-cue-arrow {
+      background: #e8f4ef;
+    }
+
+    @keyframes scroll-cue-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    .hero-orbit {
+      position: relative;
+      min-height: clamp(240px, 36vh, 310px);
+    }
+
+    .hero-orbit::before,
+    .hero-orbit::after {
+      position: absolute;
+      border: 1px solid rgba(119, 170, 152, 0.3);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .hero-orbit::before {
+      inset: 16px 4px 10px 30px;
+      transform: rotate(-18deg);
+    }
+
+    .hero-orbit::after {
+      inset: 48px 34px 42px 0;
+      border-color: rgba(141, 183, 217, 0.35);
+      transform: rotate(19deg);
+    }
+
+    .schedule-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(100%, 360px);
+      padding: 22px;
+      border: 1px solid rgba(205, 216, 225, 0.9);
+      border-radius: 18px;
+      background: rgba(255, 253, 249, 0.9);
+      box-shadow: var(--shadow);
+      transform: translate(-50%, -50%) rotate(3deg);
+    }
+
+    .schedule-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .schedule-card-top strong {
+      color: var(--mint-deep);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 42px repeat(5, 1fr);
+      gap: 5px;
+      margin-top: 18px;
+    }
+
+    .mini-grid span {
+      min-height: 23px;
+      border-radius: 5px;
+      background: #edf3f4;
+    }
+
+    .mini-grid .time {
+      background: transparent;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 23px;
+      text-align: right;
+    }
+
+    .mini-grid .mint { background: #b8dbc8; }
+    .mini-grid .blue { background: #9cc9e5; }
+    .mini-grid .yellow { background: #f1d18d; }
+    .mini-grid .coral { background: #e9afb6; }
+
+    .card-caption {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 16px 0 0;
+    }
+
+    .welcome > .principles {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+
+    .principle {
+      padding: 4px 2px 0;
+    }
+
+    .principle-number {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--mint-deep);
+      font-family: Georgia, serif;
+      font-size: 19px;
+    }
+
+    .principle h2 {
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .principle p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .schedule-section {
+      scroll-margin-top: 20px;
+      padding-top: 12px;
+      scroll-snap-align: start;
+      transition: opacity 520ms ease, transform 650ms cubic-bezier(0.22, 0.8, 0.28, 1);
+    }
+
+    .page-shell.is-scroll-enhanced .schedule-section {
+      opacity: 0.72;
+      transform: translateY(24px);
+    }
+
+    .page-shell.is-scroll-enhanced .schedule-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 5px;
+      font-size: 28px;
+    }
+
+    .section-heading p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .external-link {
+      color: var(--blue-deep);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .schedule-frame {
+      display: block;
+      width: 100%;
+      height: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(205, 216, 225, 0.88);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    footer {
+      padding-top: 42px;
+      color: #91a0aa;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .welcome {
+        grid-template-columns: 1fr;
+        gap: clamp(10px, 2vh, 18px);
+        min-height: calc(100svh - 66px);
+        padding: clamp(24px, 4vh, 36px) 0 72px;
+      }
+
+      .hero-orbit {
+        min-height: clamp(210px, 27vh, 240px);
+      }
+
+      .principles {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        padding-top: 10px;
+      }
+
+      .principle {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell {
+        width: min(100% - 22px, 1260px);
+        padding-top: 18px;
+      }
+
+      .site-nav {
+        align-items: flex-start;
+      }
+
+      .nav-link {
+        display: none;
+      }
+
+      .welcome {
+        padding: 24px 0 72px;
+      }
+
+      .scroll-cue {
+        bottom: 12px;
+      }
+
+      h1 {
+        margin-bottom: 12px;
+        font-size: clamp(32px, 10.5vw, 46px);
+      }
+
+      .welcome-copy {
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      .hero-orbit {
+        min-height: 205px;
+      }
+
+      .schedule-card {
+        width: min(100%, 320px);
+        padding: 16px;
+      }
+
+      .principles {
+        gap: 6px;
+      }
+
+      .principle-number {
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .principle h2 {
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+
+      .principle p {
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .schedule-frame {
+        border-radius: 14px;
+      }
+    }
+
+    @media (max-width: 560px) and (max-height: 720px) {
+      .welcome {
+        row-gap: 8px;
+        padding: 14px 0 58px;
+      }
+
+      .kicker {
+        margin-bottom: 7px;
+        font-size: 9px;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+        font-size: clamp(30px, 9.5vw, 40px);
+      }
+
+      .welcome-copy {
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .hero-orbit {
+        min-height: 170px;
+      }
+
+      .schedule-card {
+        padding: 12px;
+      }
+
+      .schedule-card-top {
+        padding-bottom: 8px;
+        font-size: 10px;
+      }
+
+      .mini-grid {
+        gap: 3px;
+        margin-top: 10px;
+      }
+
+      .mini-grid span {
+        min-height: 16px;
+      }
+
+      .mini-grid .time {
+        line-height: 16px;
+      }
+
+      .card-caption {
+        margin-top: 10px;
+        font-size: 9px;
+        line-height: 1.4;
+      }
+
+      .principles {
+        gap: 5px;
+        padding-top: 6px;
+      }
+
+      .principle-number {
+        margin-bottom: 3px;
+        font-size: 15px;
+      }
+
+      .principle h2 {
+        margin-bottom: 3px;
+        font-size: 13px;
+      }
+
+      .principle p {
+        font-size: 9px;
+        line-height: 1.3;
+      }
+
+      .scroll-cue {
+        bottom: 8px;
+        gap: 4px;
+        font-size: 10px;
+      }
+
+      .scroll-cue-arrow {
+        width: 28px;
+        height: 28px;
+        font-size: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="site-nav" aria-label="主导航">
+      <a class="wordmark" href="#top">
+        <span class="wordmark-mark" aria-hidden="true">日</span>
+        <span>NDIT · SPEAKING LAB</span>
+      </a>
+      <a class="nav-link" href="#schedule">进入周课表 →</a>
+    </nav>
+
+    <section class="welcome" id="top" aria-labelledby="welcomeTitle">
+      <div>
+        <p class="kicker">2026 · JAPANESE ORAL BOOST</p>
+        <h1 id="welcomeTitle">把每一次开口，放进清晰的节奏里。</h1>
+        <p class="welcome-copy">欢迎来到日语口语强化培训工作台。固定课程、练习时段和一对一测评，都可以在同一张周计划里被看见、被安排，也被真正执行。</p>
+      </div>
+
+      <div class="hero-orbit" aria-label="课表预览">
+        <div class="schedule-card">
+          <div class="schedule-card-top">
+            <span>WEEKLY RHYTHM</span>
+            <strong>15 MINUTES</strong>
+          </div>
+          <div class="mini-grid" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span class="time">09:00</span><span class="mint"></span><span></span><span class="coral"></span><span></span><span class="blue"></span>
+            <span class="time">13:00</span><span class="yellow"></span><span></span><span class="mint"></span><span class="blue"></span><span></span>
+            <span class="time">16:00</span><span></span><span class="coral"></span><span></span><span class="mint"></span><span class="yellow"></span>
+            <span class="time">18:30</span><span class="blue"></span><span class="yellow"></span><span></span><span class="coral"></span><span></span>
+          </div>
+          <p class="card-caption">固定课程先安静地占据它们的位置，剩下的时间留给你的练习和测评。</p>
+        </div>
+      </div>
+
+      <section class="principles" id="principles" aria-label="使用方式">
+        <article class="principle">
+          <span class="principle-number">01</span>
+          <h2>先看全局</h2>
+          <p>周一到周日集中展示，固定课程按培训周自动出现，当前时间也会在课表中标记。</p>
+        </article>
+        <article class="principle">
+          <span class="principle-number">02</span>
+          <h2>再安排空档</h2>
+          <p>拖动一对一到空白时段，或直接在时间轴上拖选范围，系统会吸附到 15 分钟刻度。</p>
+        </article>
+        <article class="principle">
+          <span class="principle-number">03</span>
+          <h2>最后确认节奏</h2>
+          <p>课程冲突、周目标和固定时间都会被明确提示，预约结果只保存在你的浏览器中。</p>
+        </article>
+      </section>
+
+      <a class="scroll-cue" href="#schedule" aria-label="滚动开始安排本周课程">
+        <span class="scroll-cue-arrow" aria-hidden="true">↓</span>
+        <span>滚动开始安排本周课程</span>
+      </a>
+    </section>
+
+    <section class="schedule-section" id="schedule" aria-labelledby="scheduleTitle">
+      <div class="section-heading">
+        <div>
+          <h2 id="scheduleTitle">周课表预约</h2>
+          <p>固定课程、一对一练习与每周目标，都在下面这张工作表中。</p>
+        </div>
+        <a class="external-link" href="J_Oral_Boost_Schedule.html" target="_blank" rel="noopener">在独立页面打开 ↗</a>
+      </div>
+      <iframe class="schedule-frame" src="J_Oral_Boost_Schedule.html" title="日语口语强化培训周课表" scrolling="no"></iframe>
+    </section>
+
+    <footer>Guan Xiaoshen · JAPANESE SPEAKING LAB</footer>
+  </main>
+
+  <script>
+    "use strict";
+
+    const scheduleFrame = document.querySelector(".schedule-frame");
+    const scheduleSection = document.querySelector("#schedule");
+    const pageShell = document.querySelector(".page-shell");
+
+    pageShell?.classList.add("is-scroll-enhanced");
+
+    if (scheduleSection && typeof IntersectionObserver === "function") {
+      const scheduleObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          scheduleSection.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      }, { threshold: 0.12 });
+      scheduleObserver.observe(scheduleSection);
+    } else {
+      scheduleSection?.classList.add("is-visible");
+    }
+
+    function syncScheduleFrameHeight() {
+      const frameDocument = scheduleFrame?.contentDocument;
+      if (!frameDocument) {
+        return;
+      }
+      const documentHeight = Math.max(
+        frameDocument.body?.scrollHeight || 0,
+        frameDocument.documentElement?.scrollHeight || 0
+      );
+      scheduleFrame.style.height = `${documentHeight + 2}px`;
+    }
+
+    scheduleFrame?.addEventListener("load", () => {
+      syncScheduleFrameHeight();
+      const frameDocument = scheduleFrame.contentDocument;
+      if (frameDocument?.body && typeof ResizeObserver === "function") {
+        new ResizeObserver(syncScheduleFrameHeight).observe(frameDocument.body);
+      }
+    });
+  </script>
+</body>
+</html>
