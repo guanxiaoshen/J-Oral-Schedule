@@ -1,0 +1,3029 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日语口语强化培训 · 周课表预约</title>
+  <style>
+    :root {
+      --ink: #243244;
+      --muted: #718096;
+      --line: #dfe6ee;
+      --line-strong: #c8d4e2;
+      --paper: #fffdf9;
+      --panel: rgba(255, 253, 249, 0.9);
+      --blue: #8db7d9;
+      --blue-deep: #3c6d98;
+      --mint: #b8dbc8;
+      --yellow: #f3d99c;
+      --coral: #edb3aa;
+      --lavender: #c6bae2;
+      --shadow: 0 18px 50px rgba(74, 92, 117, 0.12);
+      --soft-shadow: 0 8px 20px rgba(74, 92, 117, 0.09);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: #edf3f5;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "Source Han Sans SC", "Avenir Next", "Microsoft YaHei", sans-serif;
+      background:
+        linear-gradient(145deg, rgba(255, 253, 249, 0.92), rgba(231, 241, 244, 0.88)),
+        repeating-linear-gradient(0deg, rgba(106, 137, 156, 0.035) 0, rgba(106, 137, 156, 0.035) 1px, transparent 1px, transparent 5px);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    [draggable="true"]:focus-visible {
+      outline: 3px solid rgba(76, 132, 177, 0.36);
+      outline-offset: 2px;
+    }
+
+    .app-shell {
+      width: min(1540px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 30px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .brand-kicker {
+      margin: 0 0 8px;
+      color: var(--blue-deep);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+      font-size: clamp(28px, 3.3vw, 46px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.16;
+    }
+
+    .subtitle {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar,
+    .toolbar-group,
+    .week-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbar {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .toolbar-group {
+      min-height: 44px;
+      padding: 5px;
+      border: 1px solid rgba(200, 212, 226, 0.9);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .icon-button,
+    .text-button,
+    .primary-button,
+    .subtle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+    }
+
+    .icon-button {
+      width: 34px;
+      color: var(--ink);
+      background: transparent;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .icon-button:hover,
+    .subtle-button:hover {
+      background: #e9f1f6;
+    }
+
+    .text-button,
+    .subtle-button {
+      padding: 0 12px;
+      color: var(--blue-deep);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .primary-button {
+      padding: 0 15px;
+      color: #fff;
+      background: var(--blue-deep);
+      box-shadow: 0 6px 14px rgba(60, 109, 152, 0.22);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .primary-button:hover {
+      background: #315b80;
+      box-shadow: 0 8px 18px rgba(60, 109, 152, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .week-readout {
+      min-width: 204px;
+      padding: 0 8px;
+      text-align: center;
+    }
+
+    .week-readout strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .week-readout span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .switch-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .switch-label input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .switch {
+      position: relative;
+      width: 38px;
+      height: 22px;
+      border-radius: 99px;
+      background: #cbd5df;
+      transition: background-color 180ms ease;
+    }
+
+    .switch::after {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(51, 71, 92, 0.2);
+      content: "";
+      transition: transform 180ms ease;
+    }
+
+    .switch-label input:checked + .switch {
+      background: #79af9a;
+    }
+
+    .switch-label input:checked + .switch::after {
+      transform: translateX(16px);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 290px;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .calendar-card,
+    .side-card,
+    .info-card {
+      border: 1px solid rgba(205, 216, 225, 0.88);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .calendar-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .calendar-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .calendar-toolbar p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .calendar-toolbar strong {
+      color: var(--ink);
+    }
+
+    .fold-summary {
+      color: #6e9884;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .calendar-scroller {
+      flex: 1 1 auto;
+      min-height: 520px;
+      min-width: 0;
+      max-height: none;
+      overflow: auto;
+      scrollbar-color: #b6cbd8 transparent;
+      scrollbar-width: thin;
+    }
+
+    .calendar-grid {
+      min-width: 1060px;
+    }
+
+    .calendar-head,
+    .calendar-body {
+      display: grid;
+      grid-template-columns: 84px repeat(7, minmax(140px, 1fr));
+    }
+
+    .calendar-head {
+      position: sticky;
+      z-index: 6;
+      top: 0;
+      border-bottom: 1px solid var(--line-strong);
+      background: rgba(250, 253, 253, 0.96);
+      box-shadow: 0 5px 12px rgba(63, 85, 107, 0.05);
+    }
+
+    .corner,
+    .day-header {
+      min-height: 72px;
+      padding: 12px 10px;
+    }
+
+    .corner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      border-right: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .day-header {
+      border-right: 1px solid var(--line);
+      text-align: center;
+      transition: background-color 180ms ease;
+    }
+
+    .day-header:last-child {
+      border-right: 0;
+    }
+
+    .day-header.is-today {
+      background: #e9f4f0;
+      box-shadow: inset 0 -3px 0 #77ab98;
+    }
+
+    .day-header.is-folded-day {
+      padding-right: 4px;
+      padding-left: 4px;
+      background: #f1f5f5;
+    }
+
+    .day-header.is-folded-day .day-weekday {
+      font-size: 10px;
+    }
+
+    .day-header.is-folded-day .day-date {
+      font-size: 12px;
+    }
+
+    .day-header.is-folded-day .day-mark {
+      display: none;
+    }
+
+    .day-weekday {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .day-date {
+      display: block;
+      margin-top: 4px;
+      font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .day-mark {
+      display: inline-flex;
+      min-height: 18px;
+      align-items: center;
+      margin-top: 4px;
+      padding: 0 7px;
+      border-radius: 99px;
+      color: #4c806b;
+      background: #d7ede4;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .calendar-body {
+      align-items: stretch;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .time-axis-track,
+    .day-track {
+      position: relative;
+      transition: height 240ms ease;
+    }
+
+    .time-axis-track {
+      border-right: 1px solid var(--line-strong);
+      background: rgba(247, 250, 251, 0.74);
+    }
+
+    .day-track {
+      border-right: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .day-track:last-child {
+      border-right: 0;
+    }
+
+    .day-track.is-folded-day {
+      background: rgba(241, 245, 245, 0.62);
+    }
+
+    .time-label {
+      position: absolute;
+      right: 8px;
+      z-index: 2;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .time-label.is-start {
+      transform: translateY(4px);
+    }
+
+    .time-label.is-end {
+      transform: translateY(-100%);
+    }
+
+    .slot {
+      position: absolute;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      border-bottom: 1px solid rgba(212, 222, 230, 0.74);
+      background: rgba(255, 255, 255, 0.22);
+      cursor: crosshair;
+      transition: background-color 120ms ease, box-shadow 120ms ease;
+    }
+
+    .slot:nth-child(2n) {
+      border-bottom-color: rgba(195, 209, 220, 0.9);
+    }
+
+    .slot:hover {
+      z-index: 2;
+      background: rgba(220, 239, 242, 0.65);
+    }
+
+    .slot.is-selected {
+      z-index: 3;
+      background: rgba(154, 205, 196, 0.58);
+      box-shadow: inset 0 0 0 2px rgba(73, 133, 119, 0.36);
+    }
+
+    .slot.is-drop-target {
+      z-index: 3;
+      background: rgba(173, 211, 238, 0.72);
+      box-shadow: inset 0 0 0 2px rgba(66, 122, 162, 0.48);
+    }
+
+    .appointment {
+      position: absolute;
+      right: 6px;
+      left: 6px;
+      z-index: 4;
+      min-height: 24px;
+      overflow: visible;
+      border: 1px solid color-mix(in srgb, var(--appointment-color) 65%, #ffffff);
+      border-left: 5px solid var(--appointment-color);
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--appointment-color) 26%, #ffffff);
+      box-shadow: 0 6px 13px rgba(70, 90, 108, 0.12);
+      cursor: grab;
+      transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+    }
+
+    .appointment:hover,
+    .appointment:focus-within {
+      z-index: 8;
+      box-shadow: 0 10px 20px rgba(70, 90, 108, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .appointment.is-fixed-course {
+      cursor: default;
+    }
+
+    .appointment.is-fixed-course:hover {
+      box-shadow: 0 8px 16px rgba(70, 90, 108, 0.14);
+      transform: none;
+    }
+
+    .appointment.is-unbooked {
+      --appointment-color: #aab5bc !important;
+      border-color: #cbd3d8;
+      background: #edf0f1;
+    }
+
+    .appointment.is-unbooked .appointment-name,
+    .appointment.is-unbooked .appointment-time,
+    .appointment.is-unbooked .course-kind {
+      color: #7d8990;
+    }
+
+    .appointment.is-booked {
+      background: color-mix(in srgb, var(--appointment-color) 26%, #ffffff);
+    }
+
+    .appointment.is-unavailable {
+      opacity: 0.62;
+    }
+
+    .appointment.is-unavailable .course-kind {
+      color: #87949b;
+    }
+
+    .appointment.is-large-a {
+      --appointment-color: #a9d3a0;
+    }
+
+    .appointment.is-large-b {
+      --appointment-color: #f1d18d;
+    }
+
+    .appointment.is-small-course {
+      --appointment-color: #e9afb6;
+    }
+
+    .appointment.is-one-on-one {
+      --appointment-color: #9cc9e5;
+    }
+
+    .appointment.is-dragging {
+      opacity: 0.54;
+      cursor: grabbing;
+      transform: scale(0.98);
+    }
+
+    .appointment-content {
+      min-height: 100%;
+      padding: 7px 32px 7px 9px;
+      overflow: hidden;
+    }
+
+    .fixed-course .appointment-content {
+      padding-right: 9px;
+    }
+
+    .appointment-name {
+      display: block;
+      overflow: hidden;
+      color: #314658;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .appointment-time {
+      display: block;
+      margin-top: 2px;
+      overflow: hidden;
+      color: #6d7e8a;
+      font-size: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .course-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .course-kind {
+      overflow: hidden;
+      color: #607a83;
+      font-size: 10px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .course-status-button {
+      min-height: 24px;
+      flex: 0 0 auto;
+      padding: 0 8px;
+      border: 1px solid rgba(107, 139, 149, 0.28);
+      border-radius: 7px;
+      color: #54717c;
+      background: rgba(255, 255, 255, 0.82);
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 800;
+      transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+    }
+
+    .course-status-button:hover {
+      border-color: #75a794;
+      color: #3f7663;
+      background: #f5fffa;
+    }
+
+    .course-status-button.is-booked {
+      border-color: rgba(157, 91, 103, 0.28);
+      color: #995766;
+      background: rgba(255, 246, 247, 0.9);
+    }
+
+    .course-status-button:disabled,
+    .course-status-button.is-disabled {
+      border-color: #d3dade;
+      color: #9aa6ac;
+      background: #eef1f2;
+      cursor: not-allowed;
+      opacity: 1;
+    }
+
+    .course-note {
+      display: block;
+      margin-top: 3px;
+      overflow: hidden;
+      color: #8b7b62;
+      font-size: 9px;
+      line-height: 1.3;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .appointment-actions {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      display: flex;
+      gap: 2px;
+      opacity: 0;
+      transition: opacity 140ms ease;
+    }
+
+    .appointment:hover .appointment-actions,
+    .appointment:focus-within .appointment-actions {
+      opacity: 1;
+    }
+
+    .appointment-action {
+      display: inline-flex;
+      width: 22px;
+      height: 22px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      color: #426074;
+      background: rgba(255, 255, 255, 0.84);
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .appointment-action:hover {
+      background: #fff;
+    }
+
+    .appointment-action.delete:hover {
+      color: #a34f55;
+      background: #fff1ef;
+    }
+
+    .resize-handle {
+      position: absolute;
+      right: 6px;
+      bottom: -4px;
+      left: 6px;
+      z-index: 3;
+      height: 9px;
+      border-radius: 99px;
+      cursor: ns-resize;
+      opacity: 0;
+      transition: opacity 140ms ease, background-color 140ms ease;
+    }
+
+    .appointment:hover .resize-handle,
+    .appointment:focus-within .resize-handle {
+      opacity: 1;
+      background: color-mix(in srgb, var(--appointment-color) 70%, #ffffff);
+    }
+
+    .now-line {
+      position: absolute;
+      right: 0;
+      left: 0;
+      z-index: 6;
+      height: 2px;
+      background: #d47a71;
+      pointer-events: none;
+    }
+
+    .now-line::before {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d47a71;
+      content: "";
+      box-shadow: 0 0 0 3px rgba(212, 122, 113, 0.14);
+    }
+
+    .now-label {
+      position: absolute;
+      top: -17px;
+      left: 8px;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #9a534d;
+      background: #fff0ed;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .sidebar {
+      display: grid;
+      gap: 16px;
+    }
+
+    .side-card,
+    .info-card {
+      padding: 18px;
+    }
+
+    .side-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .side-heading h2,
+    .info-card h2 {
+      margin-bottom: 4px;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .side-heading p,
+    .info-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .goal-card {
+      border-top: 4px solid #9bc8b5;
+    }
+
+    .goal-card .side-heading {
+      margin-bottom: 11px;
+    }
+
+    .goal-week-label {
+      color: #4b806e !important;
+      font-weight: 800;
+    }
+
+    .goal-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .goal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 9px;
+      border-radius: 9px;
+      background: #f1f7f4;
+      color: #607671;
+      font-size: 11px;
+    }
+
+    .goal-row strong {
+      color: #3d695a;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .goal-row.is-limit-reached {
+      background: #e6f4ed;
+    }
+
+    .goal-row.is-limit-reached strong {
+      color: #307156;
+    }
+
+    .goal-note {
+      margin-top: 11px !important;
+      padding-top: 10px;
+      border-top: 1px solid #dceae3;
+      color: #678077 !important;
+      font-size: 10px !important;
+      line-height: 1.55 !important;
+    }
+
+    .pool-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .pool-item {
+      position: relative;
+      display: flex;
+      min-height: 54px;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: rgba(244, 248, 248, 0.82);
+      cursor: grab;
+      user-select: none;
+      transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .pool-item:hover {
+      background: #f7fbfb;
+      box-shadow: var(--soft-shadow);
+      transform: translateX(2px);
+    }
+
+    .pool-item.is-selected {
+      border-color: #77aa98;
+      background: #eaf5f0;
+      box-shadow: 0 0 0 3px rgba(119, 170, 152, 0.12);
+    }
+
+    .pool-item.is-dragging {
+      opacity: 0.56;
+      cursor: grabbing;
+      transform: scale(0.98) rotate(-1deg);
+    }
+
+    .pool-swatch {
+      width: 13px;
+      height: 34px;
+      flex: 0 0 auto;
+      border-radius: 6px;
+      background: var(--template-color);
+      box-shadow: inset 0 0 0 1px rgba(62, 85, 100, 0.12);
+    }
+
+    .pool-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .pool-copy strong,
+    .pool-copy span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pool-copy strong {
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .pool-copy span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .pool-empty {
+      padding: 18px 10px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .selected-hint {
+      min-height: 34px;
+      margin-top: 13px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      color: #4b806e;
+      background: #e8f4ef;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .selected-hint.is-empty {
+      color: var(--muted);
+      background: #f3f6f6;
+    }
+
+    .legend {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .legend li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .legend-mark {
+      display: inline-block;
+      width: 23px;
+      height: 12px;
+      flex: 0 0 auto;
+      border: 1px solid rgba(76, 105, 120, 0.18);
+      border-radius: 4px;
+    }
+
+    .legend-mark.drag {
+      background: #e6f0f5;
+      border-style: dashed;
+    }
+
+    .legend-mark.large-a {
+      background: #a9d3a0;
+    }
+
+    .legend-mark.large-b {
+      background: #f1d18d;
+    }
+
+    .legend-mark.small-course {
+      background: #e9afb6;
+    }
+
+    .legend-mark.unbooked {
+      background: #edf0f1;
+      border-color: #aab5bc;
+    }
+
+    .legend-mark.select {
+      background: rgba(154, 205, 196, 0.65);
+    }
+
+    .legend-mark.now {
+      height: 2px;
+      border: 0;
+      border-radius: 0;
+      background: #d47a71;
+    }
+
+    .shortcut-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .shortcut-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .shortcut-row kbd {
+      padding: 2px 6px;
+      border: 1px solid var(--line-strong);
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      color: #587082;
+      background: #fff;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .info-card {
+      border-left: 4px solid #a9cfbf;
+    }
+
+    .info-card h2 {
+      color: #477763;
+    }
+
+    .info-card p {
+      margin-bottom: 10px;
+    }
+
+    .info-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .author-credit {
+      padding: 18px 0 0;
+      color: #91a0aa;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .toast-region {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 30;
+      display: grid;
+      gap: 8px;
+      width: min(330px, calc(100vw - 44px));
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 12px 14px;
+      border: 1px solid rgba(186, 210, 214, 0.95);
+      border-radius: 11px;
+      color: #385566;
+      background: rgba(248, 253, 252, 0.96);
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      line-height: 1.45;
+      animation: toast-in 220ms ease both;
+    }
+
+    .toast.is-error {
+      border-color: #efc3bd;
+      color: #884b4a;
+      background: #fff5f2;
+    }
+
+    .toast.is-leaving {
+      animation: toast-out 180ms ease both;
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes toast-out {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(5px); }
+    }
+
+    .modal-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(38, 54, 67, 0.36);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-layer.is-open {
+      display: flex;
+      animation: backdrop-in 160ms ease both;
+    }
+
+    .modal-card {
+      width: min(520px, 100%);
+      max-height: min(720px, calc(100vh - 40px));
+      overflow: auto;
+      border: 1px solid rgba(214, 225, 230, 0.95);
+      border-radius: 18px;
+      background: #fffdf9;
+      box-shadow: 0 24px 70px rgba(36, 50, 68, 0.24);
+      animation: modal-in 190ms ease both;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px 8px;
+    }
+
+    .modal-head h2 {
+      margin-bottom: 0;
+      font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .modal-close {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      color: var(--muted);
+      background: #f2f5f5;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-close:hover {
+      color: var(--ink);
+      background: #e7eff0;
+    }
+
+    .modal-body {
+      padding: 8px 24px 20px;
+      color: #536875;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .modal-body p {
+      margin-bottom: 10px;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-body ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .modal-body li + li {
+      margin-top: 6px;
+    }
+
+    .modal-note {
+      margin-top: 13px;
+      padding: 10px 12px;
+      border-left: 3px solid #9ec7b6;
+      border-radius: 0 8px 8px 0;
+      color: #557767;
+      background: #eef8f3;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 14px 24px 22px;
+      border-top: 1px solid #e5ebed;
+    }
+
+    .modal-actions button {
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .modal-actions .modal-cancel {
+      color: #6e7d87;
+      background: #f1f4f4;
+    }
+
+    .modal-actions .modal-adjust {
+      color: #8b6c35;
+      background: #fff4d9;
+    }
+
+    .modal-actions .modal-confirm {
+      color: #fff;
+      background: var(--blue-deep);
+    }
+
+    .modal-actions .modal-danger {
+      color: #fff;
+      background: #a85d60;
+    }
+
+    .modal-actions button:hover {
+      filter: brightness(0.97);
+      transform: translateY(-1px);
+    }
+
+    .form-field {
+      display: grid;
+      gap: 6px;
+      margin-top: 13px;
+    }
+
+    .form-field:first-child {
+      margin-top: 0;
+    }
+
+    .form-field label {
+      color: #536875;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .form-field input[type="text"] {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .form-field input[type="color"] {
+      width: 100%;
+      height: 42px;
+      padding: 3px;
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .range-summary {
+      margin-bottom: 14px;
+      padding: 11px 12px;
+      border-radius: 10px;
+      color: #446579;
+      background: #edf5f7;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .conflict-list {
+      display: grid;
+      gap: 7px;
+      max-height: 150px;
+      margin: 12px 0;
+      padding: 0;
+      overflow: auto;
+      list-style: none;
+    }
+
+    .conflict-list li {
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #795751;
+      background: #fff1ed;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    @keyframes backdrop-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(8px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    body.is-selecting,
+    body.is-resizing {
+      user-select: none;
+    }
+
+    @media (max-width: 1080px) {
+      .workspace {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .calendar-card {
+        display: block;
+      }
+
+      .calendar-scroller {
+        max-height: calc(100vh - 198px);
+      }
+
+      .sidebar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .side-card:first-child {
+        grid-row: span 2;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-shell {
+        width: min(100% - 22px, 1540px);
+        padding-top: 20px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+      }
+
+      .toolbar-group {
+        max-width: 100%;
+      }
+
+      .week-readout {
+        min-width: 170px;
+      }
+
+      .calendar-scroller {
+        max-height: 64vh;
+      }
+
+      .calendar-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .fold-summary {
+        text-align: left;
+      }
+
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .side-card:first-child {
+        grid-row: auto;
+      }
+
+      .modal-head,
+      .modal-body,
+      .modal-actions {
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+
+      .modal-actions {
+        flex-wrap: wrap;
+      }
+
+      .modal-actions button {
+        flex: 1 1 auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="brand-kicker">NDIT / JAPANESE SPEAKING LAB</p>
+        <h1>周课表预约</h1>
+        <p class="subtitle">把固定课程、练习和自己的时间，放进同一张清晰的周计划里。</p>
+      </div>
+      <div class="toolbar" aria-label="课表工具栏">
+        <div class="toolbar-group week-nav">
+          <button class="icon-button" id="previousWeek" type="button" title="上一周" aria-label="上一周">‹</button>
+          <div class="week-readout">
+            <strong id="weekLabel">当前周</strong>
+            <span id="weekSubLabel">周一至周日</span>
+          </div>
+          <button class="icon-button" id="nextWeek" type="button" title="下一周" aria-label="下一周">›</button>
+          <button class="text-button" id="todayButton" type="button">回到本周</button>
+        </div>
+        <div class="toolbar-group">
+          <label class="switch-label" for="collapseToggle">
+            <input id="collapseToggle" type="checkbox">
+            <span class="switch" aria-hidden="true"></span>
+            <span>折叠空白小时</span>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <section class="workspace" aria-label="周课表工作区">
+      <section class="calendar-card" aria-label="预约课表">
+        <div class="calendar-toolbar">
+          <p><strong id="appointmentCount">0 个已预约</strong> · 每格 15 分钟 · 09:00—20:00</p>
+          <span class="fold-summary" id="foldSummary">空白小时保持展开</span>
+        </div>
+        <div class="calendar-scroller" id="calendarScroller">
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="side-card" aria-labelledby="poolTitle">
+          <div class="side-heading">
+            <div>
+              <h2 id="poolTitle">待预约池</h2>
+              <p>只有一对一可自由选择时间。</p>
+            </div>
+          </div>
+          <div class="pool-list" id="poolList"></div>
+          <div class="selected-hint is-empty" id="selectedHint">拖动“一对一”到空档，默认安排 1 小时。</div>
+        </section>
+
+        <section class="side-card goal-card" aria-labelledby="goalTitle">
+          <div class="side-heading">
+            <div>
+              <h2 id="goalTitle">每周目标</h2>
+              <p class="goal-week-label" id="goalWeekLabel">第1周</p>
+            </div>
+          </div>
+          <ul class="goal-list">
+            <li class="goal-row" id="goalLargeRow"><span>大班课预约</span><strong id="goalLargeValue">0 / 4</strong></li>
+            <li class="goal-row" id="goalSmallRow"><span>小班课预约</span><strong id="goalSmallValue">0 / 2</strong></li>
+            <li class="goal-row" id="goalOneRow"><span>一对一预约</span><strong id="goalOneValue">0 / 1</strong></li>
+          </ul>
+          <p class="goal-note" id="goalNote">每周学习2个场景；大班课每周4节，同一天的A/B时段选一个即可。</p>
+        </section>
+
+        <section class="side-card" aria-labelledby="legendTitle">
+          <div class="side-heading">
+            <div>
+              <h2 id="legendTitle">使用提示</h2>
+              <p>每个动作都会留下清晰反馈。</p>
+            </div>
+          </div>
+          <ul class="legend">
+            <li><span class="legend-mark large-a" aria-hidden="true"></span>绿色：已预约软口大班课A</li>
+            <li><span class="legend-mark large-b" aria-hidden="true"></span>黄色：已预约软口大班课B</li>
+            <li><span class="legend-mark small-course" aria-hidden="true"></span>粉色：已预约的软口小班课</li>
+            <li><span class="legend-mark unbooked" aria-hidden="true"></span>灰色：未预约的固定小班课</li>
+            <li><span class="legend-mark drag" aria-hidden="true"></span>蓝色：可自由安排的一对一</li>
+            <li><span class="legend-mark now" aria-hidden="true"></span>红线：当前时间（当前周内且在时段中时显示）</li>
+          </ul>
+          <div class="shortcut-list">
+            <div class="shortcut-row"><span>预约块底部拉伸</span><kbd>调整时长</kbd></div>
+            <div class="shortcut-row"><span>块右上角按钮</span><kbd>编辑 / 删除</kbd></div>
+            <div class="shortcut-row"><span>池中类型点击</span><kbd>触屏友好</kbd></div>
+          </div>
+        </section>
+
+        <section class="info-card" aria-labelledby="noteTitle">
+          <h2 id="noteTitle">这张表的规则</h2>
+          <p>绿色/黄色大班课和灰色小班课来自附件课表，日期与时间固定，不能编辑或拖动；大班和小班都通过按钮预约，预约后显示对应颜色。</p>
+          <p>拖拽一对一会自动对齐最近的15分钟刻度。跨越固定课程或已有预约时，系统不会默默覆盖。</p>
+          <p>折叠以“整小时”为单位：只要该小时在当前周完全没有预约，就会压缩成一条仍可悬停查看的刻度带。</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="author-credit">Guan Xiaoshen</footer>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="modal-layer" id="modalLayer" role="presentation">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h2 id="modalTitle">确认操作</h2>
+        <button class="modal-close" id="modalClose" type="button" title="关闭" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </section>
+  </div>
+
+  <script>
+    "use strict";
+
+    // 时间轴的唯一事实来源：44 个 15 分钟格子覆盖 09:00（含）至 20:00（不含）。
+    const START_MINUTES = 9 * 60;
+    const END_MINUTES = 20 * 60;
+    const SLOT_MINUTES = 15;
+    const SLOT_COUNT = (END_MINUTES - START_MINUTES) / SLOT_MINUTES;
+    const DEFAULT_DURATION = 4;
+    const STORAGE_KEY = "ndit-week-planner-v2";
+    const INTRO_SEEN_KEY = "ndit-week-planner-intro-seen";
+    const WEEKDAY_NAMES = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+    const TRAINING_START_DATE = new Date(2026, 7, 19);
+    const TRAINING_END_DATE = new Date(2026, 11, 31);
+    const COURSE_COLORS = {
+      largeA: "#A9D3A0",
+      largeB: "#F1D18D",
+      small: "#E9AFB6",
+      oneOnOne: "#9CC9E5"
+    };
+
+    const MILESTONES = {
+      6: "第一轮一对一测评",
+      13: "第二轮一对一测评",
+      19: "第三轮一对一测评",
+      20: "综合测评"
+    };
+
+    const FIXED_COURSE_RULES = [
+      { id: "mon-small-0900", day: 0, start: "09:00", end: "10:30", type: "small", weeks: [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19] },
+      { id: "mon-small-1045", day: 0, start: "10:45", end: "12:15", type: "small", weeks: [2, 3] },
+      { id: "mon-large-a", day: 0, start: "13:00", end: "14:30", type: "largeA", weeks: [2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19] },
+      { id: "mon-large-b", day: 0, start: "18:30", end: "20:00", type: "largeB", weeks: [2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19] },
+      { id: "tue-small-0900", day: 1, start: "09:00", end: "10:30", type: "small", weeks: [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19] },
+      { id: "tue-small-1045", day: 1, start: "10:45", end: "12:15", type: "small", weeks: [2, 3, 4, 5, 6, 10, 19] },
+      { id: "tue-large-a", day: 1, start: "13:00", end: "14:30", type: "largeA", weeks: [2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19] },
+      { id: "tue-small-1445", day: 1, start: "14:45", end: "16:15", type: "small", weeks: [2] },
+      { id: "tue-small-1630", day: 1, start: "16:30", end: "18:00", type: "small", weeks: [2] },
+      { id: "tue-large-b", day: 1, start: "18:30", end: "20:00", type: "largeB", weeks: [2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19] },
+      { id: "wed-small-0900", day: 2, start: "09:00", end: "10:30", type: "small", weeks: [1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "wed-small-1045", day: 2, start: "10:45", end: "12:15", type: "small", weeks: [1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "wed-large-a", day: 2, start: "13:00", end: "14:30", type: "largeA", weeks: [1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "wed-small-1445", day: 2, start: "14:45", end: "16:15", type: "small", weeks: [1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "wed-small-1630", day: 2, start: "16:30", end: "18:00", type: "small", weeks: [1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "wed-large-b", day: 2, start: "18:30", end: "20:00", type: "largeB", weeks: [1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "thu-small-0900", day: 3, start: "09:00", end: "10:30", type: "small", weeks: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18], note: "第2周同一时段有2节，请按群通知选择1节" },
+      { id: "thu-small-1045", day: 3, start: "10:45", end: "12:15", type: "small", weeks: [2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "thu-large-a", day: 3, start: "13:00", end: "14:30", type: "largeA", weeks: [8, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "thu-small-1400", day: 3, start: "14:00", end: "15:30", type: "small", weeks: [2, 3, 4, 5, 9] },
+      { id: "thu-small-1445", day: 3, start: "14:45", end: "16:45", type: "small", weeks: [8, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "thu-small-1530", day: 3, start: "15:30", end: "17:00", type: "small", weeks: [2, 3, 4, 5, 9] },
+      { id: "thu-large-b", day: 3, start: "18:30", end: "20:00", type: "largeB", weeks: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "fri-small-0900", day: 4, start: "09:00", end: "10:30", type: "small", weeks: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "fri-small-1045", day: 4, start: "10:45", end: "12:15", type: "small", weeks: [2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "fri-large-a", day: 4, start: "13:00", end: "14:30", type: "largeA", weeks: [1, 2, 3, 4, 5, 9] },
+      { id: "fri-small-1300", day: 4, start: "13:00", end: "14:30", type: "small", weeks: [8, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "fri-small-1445", day: 4, start: "14:45", end: "16:15", type: "small", weeks: [3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "fri-small-1630", day: 4, start: "16:30", end: "18:00", type: "small", weeks: [8, 10, 11, 12, 14, 15, 16, 17, 18] },
+      { id: "fri-small-1830", day: 4, start: "18:30", end: "20:00", type: "small", weeks: [1, 2, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18] }
+    ];
+
+    const DEFAULT_TEMPLATES = [
+      { id: "one-on-one", name: "一对一", color: COURSE_COLORS.oneOnOne, custom: false }
+    ];
+
+    const state = {
+      weekStart: getWeekStart(new Date()),
+      appointments: [],
+      bookedCourseIds: [],
+      templates: DEFAULT_TEMPLATES.map((template) => ({ ...template })),
+      collapseEmpty: false,
+      selectedTemplateId: null,
+      selection: null,
+      resize: null,
+      previewAppointment: null,
+      modal: null
+    };
+
+    const calendarGrid = document.getElementById("calendarGrid");
+    const poolList = document.getElementById("poolList");
+    const weekLabel = document.getElementById("weekLabel");
+    const weekSubLabel = document.getElementById("weekSubLabel");
+    const appointmentCount = document.getElementById("appointmentCount");
+    const foldSummary = document.getElementById("foldSummary");
+    const collapseToggle = document.getElementById("collapseToggle");
+    const selectedHint = document.getElementById("selectedHint");
+    const modalLayer = document.getElementById("modalLayer");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+    const modalActions = document.getElementById("modalActions");
+    const toastRegion = document.getElementById("toastRegion");
+    const goalWeekLabel = document.getElementById("goalWeekLabel");
+    const goalLargeRow = document.getElementById("goalLargeRow");
+    const goalSmallRow = document.getElementById("goalSmallRow");
+    const goalOneRow = document.getElementById("goalOneRow");
+    const goalLargeValue = document.getElementById("goalLargeValue");
+    const goalSmallValue = document.getElementById("goalSmallValue");
+    const goalOneValue = document.getElementById("goalOneValue");
+    const goalNote = document.getElementById("goalNote");
+
+    function createId(prefix) {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return `${prefix}-${window.crypto.randomUUID()}`;
+      }
+      return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function toDateKey(date) {
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    }
+
+    function fromDateKey(dateKey) {
+      const [year, month, day] = dateKey.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+
+    function addDays(date, amount) {
+      const nextDate = new Date(date);
+      nextDate.setDate(nextDate.getDate() + amount);
+      return nextDate;
+    }
+
+    function getWeekStart(date) {
+      const start = new Date(date);
+      start.setHours(0, 0, 0, 0);
+      const day = start.getDay();
+      const mondayOffset = day === 0 ? -6 : 1 - day;
+      start.setDate(start.getDate() + mondayOffset);
+      return start;
+    }
+
+    function getWeekDates() {
+      return WEEKDAY_NAMES.map((_, index) => addDays(state.weekStart, index));
+    }
+
+    function slotFromTime(time) {
+      const [hours, minutes] = time.split(":").map(Number);
+      return ((hours * 60) + minutes - START_MINUTES) / SLOT_MINUTES;
+    }
+
+    function getTrainingWeekNumber(date) {
+      const trainingMonday = getWeekStart(TRAINING_START_DATE);
+      const currentMonday = getWeekStart(date);
+      return Math.floor((currentMonday - trainingMonday) / (7 * 24 * 60 * 60 * 1000)) + 1;
+    }
+
+    function isTrainingDate(date) {
+      const dateKey = toDateKey(date);
+      return dateKey >= toDateKey(TRAINING_START_DATE) && dateKey <= toDateKey(TRAINING_END_DATE);
+    }
+
+    function getFixedCourseName(courseType) {
+      if (courseType === "largeA") {
+        return "软口大班课A";
+      }
+      if (courseType === "largeB") {
+        return "软口大班课B";
+      }
+      return "软口小班课";
+    }
+
+    function getFixedCourseColor(courseType) {
+      return COURSE_COLORS[courseType] || COURSE_COLORS.small;
+    }
+
+    function getFixedCoursesForDate(date) {
+      if (!isTrainingDate(date)) {
+        return [];
+      }
+      const weekdayIndex = (date.getDay() + 6) % 7;
+      const weekNumber = getTrainingWeekNumber(date);
+      return FIXED_COURSE_RULES
+        .filter((rule) => rule.day === weekdayIndex && rule.weeks.includes(weekNumber))
+        .map((rule) => {
+          const dateKey = toDateKey(date);
+          const id = `fixed-${rule.id}-${dateKey}`;
+          const booked = state.bookedCourseIds.includes(id);
+          return {
+            id,
+            type: "fixed",
+            courseType: rule.type,
+            date: dateKey,
+            startSlot: slotFromTime(rule.start),
+            durationSlots: slotFromTime(rule.end) - slotFromTime(rule.start),
+            name: getFixedCourseName(rule.type),
+            color: getFixedCourseColor(rule.type),
+            booked,
+            note: rule.note && weekNumber === 2 ? rule.note : ""
+          };
+        });
+    }
+
+    function getLargeCoursesForDate(date) {
+      return getFixedCoursesForDate(date).filter((course) => (
+        course.courseType === "largeA" || course.courseType === "largeB"
+      ));
+    }
+
+    function getDayHasContent(date) {
+      const dateKey = toDateKey(date);
+      return getFixedCoursesForDate(date).length > 0 || state.appointments.some((appointment) => appointment.date === dateKey);
+    }
+
+    function findFixedCourse(courseId) {
+      return getWeekDates()
+        .flatMap((date) => getFixedCoursesForDate(date))
+        .find((course) => course.id === courseId) || null;
+    }
+
+    function getWeekDateKeys(date) {
+      const monday = getWeekStart(date);
+      return Array.from({ length: 7 }, (_, index) => toDateKey(addDays(monday, index)));
+    }
+
+    function getMilestoneLabel(weekNumber) {
+      return MILESTONES[weekNumber] || "常规训练周";
+    }
+
+    function formatTimeBySlot(slotIndex) {
+      const minutes = START_MINUTES + slotIndex * SLOT_MINUTES;
+      return `${pad(Math.floor(minutes / 60))}:${pad(minutes % 60)}`;
+    }
+
+    function formatTimeRange(startSlot, durationSlots) {
+      return `${formatTimeBySlot(startSlot)}—${formatTimeBySlot(startSlot + durationSlots)}`;
+    }
+
+    function formatDateShort(date) {
+      return `${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+
+    function formatWeekLabel() {
+      const dates = getWeekDates();
+      const first = dates[0];
+      const last = dates[dates.length - 1];
+      return `${first.getFullYear()}年${formatDateShort(first)} — ${formatDateShort(last)}`;
+    }
+
+    function formatDateTimeLabel(dateKey, startSlot, durationSlots) {
+      const date = fromDateKey(dateKey);
+      const weekday = WEEKDAY_NAMES[(date.getDay() + 6) % 7];
+      return `${date.getMonth() + 1}月${date.getDate()}日（${weekday}）${formatTimeRange(startSlot, durationSlots)}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function isToday(date) {
+      return toDateKey(date) === toDateKey(new Date());
+    }
+
+    function findTemplate(templateId) {
+      return state.templates.find((template) => template.id === templateId) || null;
+    }
+
+    function findAppointment(appointmentId) {
+      return state.appointments.find((appointment) => appointment.id === appointmentId) || null;
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (!saved || typeof saved !== "object") {
+          return;
+        }
+        if (Array.isArray(saved.appointments)) {
+          state.appointments = saved.appointments.filter((appointment) => (
+            appointment.id && appointment.date && Number.isInteger(appointment.startSlot) &&
+            Number.isInteger(appointment.durationSlots) && appointment.durationSlots > 0 &&
+            (!appointment.type || appointment.type === "one-on-one")
+          ));
+        }
+        if (Array.isArray(saved.bookedCourseIds)) {
+          state.bookedCourseIds = saved.bookedCourseIds.filter((courseId) => typeof courseId === "string");
+        }
+        state.collapseEmpty = saved.collapseEmpty === true;
+      } catch (error) {
+        showToast("本地数据读取失败，已使用空白课表。", "error");
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          appointments: state.appointments,
+          bookedCourseIds: state.bookedCourseIds,
+          collapseEmpty: state.collapseEmpty
+        }));
+      } catch (error) {
+        showToast("浏览器未允许本地保存，本次数据只保留在当前页面。", "error");
+      }
+    }
+
+    function showToast(message, tone = "info") {
+      const toast = document.createElement("div");
+      toast.className = `toast${tone === "error" ? " is-error" : ""}`;
+      toast.textContent = message;
+      toastRegion.append(toast);
+      window.setTimeout(() => {
+        toast.classList.add("is-leaving");
+        window.setTimeout(() => toast.remove(), 190);
+      }, 3000);
+    }
+
+    function getDisplayedAppointment(appointment) {
+      if (state.previewAppointment && state.previewAppointment.id === appointment.id) {
+        return state.previewAppointment;
+      }
+      return appointment;
+    }
+
+    function getRowMetrics() {
+      const rowHeights = Array(SLOT_COUNT).fill(26);
+      let foldedHours = 0;
+      for (let hourIndex = 0; hourIndex < 11; hourIndex += 1) {
+        const hourStart = hourIndex * 4;
+        const hourEnd = hourStart + 4;
+        const hasAppointment = getHourHasAppointment(hourIndex);
+        if (state.collapseEmpty && !hasAppointment) {
+          foldedHours += 1;
+          for (let slotIndex = hourStart; slotIndex < hourEnd; slotIndex += 1) {
+            rowHeights[slotIndex] = 6;
+          }
+        }
+      }
+      const offsets = [];
+      let totalHeight = 0;
+      rowHeights.forEach((height) => {
+        offsets.push(totalHeight);
+        totalHeight += height;
+      });
+      const foldedDays = state.collapseEmpty ? getFoldableDayCount() : 0;
+      return { rowHeights, offsets, totalHeight, foldedHours, foldedDays };
+    }
+
+    function getHourHasAppointment(hourIndex) {
+      const hourStart = hourIndex * 4;
+      const hourEnd = hourStart + 4;
+      const fixedCourses = getWeekDates().flatMap((date) => getFixedCoursesForDate(date));
+      const weekAppointments = [...fixedCourses, ...state.appointments];
+      return weekAppointments.some((appointment) => {
+        const appointmentEnd = appointment.startSlot + appointment.durationSlots;
+        return getWeekDates().some((date) => toDateKey(date) === appointment.date) &&
+          appointment.startSlot < hourEnd && appointmentEnd > hourStart;
+      });
+    }
+
+    function getFoldableHourCount() {
+      let foldableHours = 0;
+      for (let hourIndex = 0; hourIndex < 11; hourIndex += 1) {
+        if (!getHourHasAppointment(hourIndex)) {
+          foldableHours += 1;
+        }
+      }
+      return foldableHours;
+    }
+
+    function getFoldableDayCount() {
+      return getWeekDates().filter((date) => !getDayHasContent(date)).length;
+    }
+
+    function createPositionStyle(appointment, metrics) {
+      const start = Math.max(0, Math.min(SLOT_COUNT - 1, appointment.startSlot));
+      const end = Math.max(start + 1, Math.min(SLOT_COUNT, start + appointment.durationSlots));
+      const height = metrics.rowHeights.slice(start, end).reduce((sum, value) => sum + value, 0);
+      return {
+        top: `${metrics.offsets[start] + 3}px`,
+        height: `${Math.max(20, height - 6)}px`
+      };
+    }
+
+    function renderCalendar() {
+      const dates = getWeekDates();
+      const metrics = getRowMetrics();
+      const foldedDayFlags = dates.map((date) => state.collapseEmpty && !getDayHasContent(date));
+      const columnTemplate = [
+        "84px",
+        ...foldedDayFlags.map((isFolded) => isFolded ? "42px" : "minmax(140px, 1fr)")
+      ].join(" ");
+      const head = document.createElement("div");
+      head.className = "calendar-head";
+      head.style.gridTemplateColumns = columnTemplate;
+
+      const corner = document.createElement("div");
+      corner.className = "corner";
+      corner.textContent = "时间";
+      head.append(corner);
+
+      dates.forEach((date, index) => {
+        const header = document.createElement("div");
+        header.className = `day-header${isToday(date) ? " is-today" : ""}${foldedDayFlags[index] ? " is-folded-day" : ""}`;
+        header.innerHTML = `
+          <span class="day-weekday">${WEEKDAY_NAMES[index]}</span>
+          <span class="day-date">${date.getMonth() + 1}/${pad(date.getDate())}</span>
+          ${isToday(date) ? '<span class="day-mark">今天</span>' : ""}
+        `;
+        head.append(header);
+      });
+
+      const body = document.createElement("div");
+      body.className = "calendar-body";
+      body.style.gridTemplateColumns = columnTemplate;
+
+      const timeAxis = document.createElement("div");
+      timeAxis.className = "time-axis-track";
+      timeAxis.style.height = `${metrics.totalHeight}px`;
+      for (let slotIndex = 0; slotIndex < SLOT_COUNT; slotIndex += 2) {
+        const hourIndex = Math.floor(slotIndex / 4);
+        const foldedHour = state.collapseEmpty && !getHourHasAppointment(hourIndex);
+        if (foldedHour && slotIndex % 4 !== 0) {
+          continue;
+        }
+        const label = document.createElement("span");
+        label.className = `time-label${slotIndex === 0 ? " is-start" : ""}`;
+        label.style.top = `${metrics.offsets[slotIndex]}px`;
+        label.textContent = formatTimeBySlot(slotIndex);
+        timeAxis.append(label);
+      }
+      const endLabel = document.createElement("span");
+      endLabel.className = "time-label is-end";
+      endLabel.style.top = `${metrics.totalHeight}px`;
+      endLabel.textContent = formatTimeBySlot(SLOT_COUNT);
+      timeAxis.append(endLabel);
+      body.append(timeAxis);
+
+      dates.forEach((date, index) => {
+        const dateKey = toDateKey(date);
+        const dayTrack = document.createElement("div");
+        dayTrack.className = `day-track${foldedDayFlags[index] ? " is-folded-day" : ""}`;
+        dayTrack.dataset.date = dateKey;
+        dayTrack.style.height = `${metrics.totalHeight}px`;
+
+        for (let slotIndex = 0; slotIndex < SLOT_COUNT; slotIndex += 1) {
+          const slot = document.createElement("div");
+          slot.className = "slot";
+          slot.dataset.date = dateKey;
+          slot.dataset.slot = String(slotIndex);
+          slot.style.top = `${metrics.offsets[slotIndex]}px`;
+          slot.style.height = `${metrics.rowHeights[slotIndex]}px`;
+          slot.title = `${formatDateTimeLabel(dateKey, slotIndex, 1)}`;
+          slot.addEventListener("pointerdown", handleSlotPointerDown);
+          slot.addEventListener("dragover", handleDragOver);
+          slot.addEventListener("dragleave", handleDragLeave);
+          slot.addEventListener("drop", handleSlotDrop);
+          dayTrack.append(slot);
+        }
+
+        getFixedCoursesForDate(date).forEach((course) => {
+          dayTrack.append(createCourseElement(course, metrics));
+        });
+
+        state.appointments
+          .filter((appointment) => appointment.date === dateKey)
+          .forEach((appointment) => {
+            dayTrack.append(createCourseElement(getDisplayedAppointment(appointment), metrics));
+          });
+
+        body.append(dayTrack);
+      });
+
+      calendarGrid.replaceChildren(head, body);
+      updateSelectionPreview();
+      updateNowLine();
+      updateHeader(metrics);
+    }
+
+    function createCourseElement(course, metrics) {
+      const isFixed = course.type === "fixed";
+      const isSmall = isFixed && course.courseType === "small";
+      const isLarge = isFixed && (course.courseType === "largeA" || course.courseType === "largeB");
+      const isBooked = isFixed && course.booked;
+      const sameDayLargeBooked = isLarge && getLargeCoursesForDate(fromDateKey(course.date)).some((sibling) => (
+        sibling.id !== course.id && sibling.booked
+      ));
+      const isUnavailable = isLarge && !isBooked && sameDayLargeBooked;
+      const item = document.createElement("article");
+      const typeClass = isFixed ? ` is-${course.courseType === "largeA" ? "large-a" : course.courseType === "largeB" ? "large-b" : "small-course"}` : " is-one-on-one";
+      const statusClass = isBooked
+        ? " is-booked"
+        : isFixed
+          ? ` is-unbooked${isUnavailable ? " is-unavailable" : ""}`
+          : "";
+      item.className = `appointment${isFixed ? " is-fixed-course fixed-course" : ""}${typeClass}${statusClass}`;
+      item.draggable = !isFixed;
+      item.tabIndex = 0;
+      item.dataset.appointmentId = course.id;
+      item.dataset.date = course.date;
+      item.dataset.startSlot = String(course.startSlot);
+      item.style.setProperty("--appointment-color", course.color || COURSE_COLORS.oneOnOne);
+      const position = createPositionStyle(course, metrics);
+      item.style.top = position.top;
+      item.style.height = position.height;
+      item.title = `${course.name} · ${formatDateTimeLabel(course.date, course.startSlot, course.durationSlots)}`;
+
+      const content = document.createElement("div");
+      content.className = "appointment-content";
+      content.innerHTML = `
+        <span class="appointment-name">${escapeHtml(course.name)}</span>
+        <span class="appointment-time">${formatTimeRange(course.startSlot, course.durationSlots)}</span>
+      `;
+
+      if (isFixed) {
+        const meta = document.createElement("div");
+        meta.className = "course-meta";
+        const kind = document.createElement("span");
+        kind.className = "course-kind";
+        kind.textContent = isSmall
+          ? (isBooked ? "已预约 · 固定时间" : "未预约 · 固定时间")
+          : isBooked
+            ? "已预约 · 固定时间"
+            : isUnavailable
+              ? "同日另一时段已预约"
+              : "未预约 · A/B二选一";
+        meta.append(kind);
+        if (isSmall || isLarge) {
+          const statusButton = document.createElement("button");
+          statusButton.className = `course-status-button${isBooked ? " is-booked" : ""}${isUnavailable ? " is-disabled" : ""}`;
+          statusButton.type = "button";
+          statusButton.textContent = isBooked ? "已预约" : isUnavailable ? "不可预约" : "预约";
+          statusButton.title = isBooked
+            ? `取消${isSmall ? "小班" : "大班"}预约`
+            : isUnavailable
+              ? "同一天的另一节大班课已经预约"
+              : `预约这节${isSmall ? "小班" : "大班"}课`;
+          statusButton.disabled = isUnavailable;
+          statusButton.addEventListener("pointerdown", (event) => event.stopPropagation());
+          statusButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            toggleFixedCourseBooking(course.id);
+          });
+          meta.append(statusButton);
+        }
+        content.append(meta);
+        if (course.note) {
+          const note = document.createElement("span");
+          note.className = "course-note";
+          note.textContent = course.note;
+          content.append(note);
+        }
+        item.append(content);
+      } else {
+        const actions = document.createElement("div");
+        actions.className = "appointment-actions";
+        const editButton = createAppointmentAction("✎", "编辑名称", () => openEditModal(course.id));
+        const deleteButton = createAppointmentAction("×", "删除预约", () => openDeleteModal(course.id), "delete");
+        actions.append(editButton, deleteButton);
+
+        const resizeHandle = document.createElement("div");
+        resizeHandle.className = "resize-handle";
+        resizeHandle.title = "上下拖动调整时长";
+        resizeHandle.addEventListener("pointerdown", (event) => startResize(event, course.id));
+        item.append(content, actions, resizeHandle);
+      }
+
+      item.addEventListener("pointerdown", (event) => event.stopPropagation());
+      if (!isFixed) {
+        item.addEventListener("dragstart", (event) => handleAppointmentDragStart(event, course.id));
+        item.addEventListener("dragend", handleDragEnd);
+      }
+      item.addEventListener("dragover", handleDragOver);
+      item.addEventListener("dragleave", handleDragLeave);
+      item.addEventListener("drop", handleAppointmentDrop);
+      return item;
+    }
+
+    function createAppointmentAction(icon, label, handler, extraClass = "") {
+      const button = document.createElement("button");
+      button.className = `appointment-action${extraClass ? ` ${extraClass}` : ""}`;
+      button.type = "button";
+      button.title = label;
+      button.setAttribute("aria-label", label);
+      button.textContent = icon;
+      button.addEventListener("pointerdown", (event) => event.stopPropagation());
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        handler();
+      });
+      return button;
+    }
+
+    function updateHeader(metrics = getRowMetrics()) {
+      weekLabel.textContent = formatWeekLabel();
+      const trainingWeekNumber = getTrainingWeekNumber(state.weekStart);
+      weekSubLabel.textContent = trainingWeekNumber >= 1 && trainingWeekNumber <= 20
+        ? `第${trainingWeekNumber}周`
+        : "培训周期外";
+      const weekKeys = new Set(getWeekDateKeys(state.weekStart));
+      const bookedFixedCount = getWeekDates()
+        .flatMap((date) => getFixedCoursesForDate(date))
+        .filter((course) => course.booked)
+        .length;
+      const oneOnOneCount = state.appointments.filter((appointment) => weekKeys.has(appointment.date)).length;
+      appointmentCount.textContent = `${bookedFixedCount + oneOnOneCount} 个已预约`;
+      collapseToggle.checked = state.collapseEmpty;
+      if (state.collapseEmpty) {
+        const foldedParts = [`${metrics.foldedHours} 个空白小时`];
+        if (metrics.foldedDays > 0) {
+          foldedParts.push(`${metrics.foldedDays} 个空白日`);
+        }
+        foldSummary.textContent = `已折叠 ${foldedParts.join(" · ")}`;
+      } else {
+        foldSummary.textContent = "空白小时和日期保持展开";
+      }
+      updateWeeklyGoal();
+    }
+
+    function updateWeeklyGoal() {
+      const weekNumber = getTrainingWeekNumber(state.weekStart);
+      const weekKeys = new Set(getWeekDateKeys(state.weekStart));
+      const fixedCourses = getWeekDates().flatMap((date) => getFixedCoursesForDate(date));
+      const largeBooked = fixedCourses.filter((course) => (
+        (course.courseType === "largeA" || course.courseType === "largeB") && course.booked
+      )).length;
+      const smallBooked = fixedCourses.filter((course) => course.courseType === "small" && course.booked).length;
+      const oneOnOneBooked = state.appointments.filter((appointment) => weekKeys.has(appointment.date)).length;
+      const milestone = MILESTONES[weekNumber];
+      goalWeekLabel.textContent = weekNumber >= 1 && weekNumber <= 20 ? `第${weekNumber}周 · ${getMilestoneLabel(weekNumber)}` : "非培训周";
+      goalLargeValue.textContent = `${largeBooked} / 4`;
+      goalSmallValue.textContent = `${smallBooked} / 2`;
+      goalOneValue.textContent = `${oneOnOneBooked} / 1`;
+      goalLargeRow.classList.toggle("is-limit-reached", largeBooked >= 4);
+      goalSmallRow.classList.toggle("is-limit-reached", smallBooked >= 2);
+      goalOneRow.classList.toggle("is-limit-reached", oneOnOneBooked >= 1);
+      goalNote.textContent = milestone
+        ? `${milestone}；每周学习2个场景。大班课每周4节，同一天的A/B时段选一个即可。`
+        : "每周学习2个场景；大班课每周4节，同一天的A/B时段选一个即可。";
+    }
+
+    function updateNowLine() {
+      document.querySelectorAll(".now-line").forEach((line) => line.remove());
+      const now = new Date();
+      const todayKey = toDateKey(now);
+      const minutes = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+      if (minutes < START_MINUTES || minutes > END_MINUTES) {
+        return;
+      }
+      const dayTrack = calendarGrid.querySelector(`.day-track[data-date="${todayKey}"]`);
+      if (!dayTrack) {
+        return;
+      }
+      const metrics = getRowMetrics();
+      const position = (minutes - START_MINUTES) / SLOT_MINUTES;
+      const baseSlot = Math.min(SLOT_COUNT - 1, Math.floor(position));
+      const fraction = position - Math.floor(position);
+      const top = metrics.offsets[baseSlot] + metrics.rowHeights[baseSlot] * fraction;
+      const line = document.createElement("div");
+      line.className = "now-line";
+      line.style.top = `${top}px`;
+      const label = document.createElement("span");
+      label.className = "now-label";
+      label.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      line.append(label);
+      dayTrack.append(line);
+    }
+
+    function renderPool() {
+      poolList.replaceChildren();
+      state.templates.forEach((template) => {
+        const item = document.createElement("div");
+        item.className = `pool-item${state.selectedTemplateId === template.id ? " is-selected" : ""}`;
+        item.draggable = true;
+        item.tabIndex = 0;
+        item.dataset.templateId = template.id;
+        item.style.setProperty("--template-color", template.color);
+        item.innerHTML = `
+          <span class="pool-swatch" aria-hidden="true"></span>
+          <span class="pool-copy">
+            <strong>${escapeHtml(template.name)}</strong>
+            <span>拖拽创建 · 每周最多1次</span>
+          </span>
+        `;
+        item.addEventListener("click", (event) => {
+          state.selectedTemplateId = state.selectedTemplateId === template.id ? null : template.id;
+          renderPool();
+          updateSelectedHint();
+          if (state.selectedTemplateId) {
+            showToast(`已选择“${template.name}”，点击或拖动一个时间位置即可放入。`);
+          }
+        });
+        item.addEventListener("dragstart", (event) => handleTemplateDragStart(event, template.id));
+        item.addEventListener("dragend", handleDragEnd);
+        item.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            item.click();
+          }
+        });
+        poolList.append(item);
+      });
+      updateSelectedHint();
+    }
+
+    function updateSelectedHint() {
+      const template = findTemplate(state.selectedTemplateId);
+      if (template) {
+        selectedHint.className = "selected-hint";
+        selectedHint.textContent = `已选“${template.name}”：点击或拖选空档，时间会吸附到15分钟刻度。`;
+      } else {
+        selectedHint.className = "selected-hint is-empty";
+        selectedHint.textContent = "拖动“一对一”到空档，默认安排1小时；每周最多1次。";
+      }
+    }
+
+    function handleTemplateDragStart(event, templateId) {
+      event.dataTransfer.effectAllowed = "copy";
+      event.dataTransfer.setData("application/x-ndit-template", templateId);
+      event.dataTransfer.setData("text/plain", `template:${templateId}`);
+      event.currentTarget.classList.add("is-dragging");
+      state.selectedTemplateId = templateId;
+      updateSelectedHint();
+    }
+
+    function handleAppointmentDragStart(event, appointmentId) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("application/x-ndit-appointment", appointmentId);
+      event.dataTransfer.setData("text/plain", `appointment:${appointmentId}`);
+      event.currentTarget.classList.add("is-dragging");
+    }
+
+    function handleDragEnd(event) {
+      event.currentTarget.classList.remove("is-dragging");
+      clearDropHighlights();
+    }
+
+    function handleDragOver(event) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = event.dataTransfer.types.includes("application/x-ndit-appointment") ? "move" : "copy";
+      clearDropHighlights();
+      const slot = event.currentTarget.classList.contains("slot")
+        ? event.currentTarget
+        : getSlotUnderPoint(event.clientX, event.clientY);
+      if (slot) {
+        slot.classList.add("is-drop-target");
+      }
+    }
+
+    function handleDragLeave(event) {
+      if (!event.currentTarget.contains(event.relatedTarget)) {
+        const slot = event.currentTarget.classList.contains("slot")
+          ? event.currentTarget
+          : getSlotUnderPoint(event.clientX, event.clientY);
+        if (slot) {
+          slot.classList.remove("is-drop-target");
+        }
+      }
+    }
+
+    function clearDropHighlights() {
+      document.querySelectorAll(".is-drop-target").forEach((element) => element.classList.remove("is-drop-target"));
+    }
+
+    function getSlotUnderPoint(clientX, clientY) {
+      if (!Number.isFinite(clientX) || !Number.isFinite(clientY)) {
+        return null;
+      }
+      const elements = typeof document.elementsFromPoint === "function"
+        ? document.elementsFromPoint(clientX, clientY)
+        : [document.elementFromPoint(clientX, clientY)];
+      for (const element of elements) {
+        const slot = element && (element.classList.contains("slot") ? element : element.closest?.(".slot"));
+        if (slot) {
+          return slot;
+        }
+      }
+      return null;
+    }
+
+    function handleSlotDrop(event) {
+      event.preventDefault();
+      const slot = event.currentTarget;
+      processDrop(event.dataTransfer, slot.dataset.date, Number(slot.dataset.slot));
+      clearDropHighlights();
+    }
+
+    function handleAppointmentDrop(event) {
+      event.preventDefault();
+      const appointment = event.currentTarget;
+      processDrop(event.dataTransfer, appointment.dataset.date, Number(appointment.dataset.startSlot));
+      clearDropHighlights();
+    }
+
+    function processDrop(dataTransfer, dateKey, startSlot) {
+      const templateId = dataTransfer.getData("application/x-ndit-template") || parseFallbackData(dataTransfer.getData("text/plain"), "template");
+      if (templateId) {
+        const template = findTemplate(templateId);
+        if (!template) {
+          showToast("待预约类型不存在，请重新选择。", "error");
+          return;
+        }
+        placeCandidate(makeCreateCandidate(template, dateKey, startSlot, DEFAULT_DURATION));
+        return;
+      }
+
+      const appointmentId = dataTransfer.getData("application/x-ndit-appointment") || parseFallbackData(dataTransfer.getData("text/plain"), "appointment");
+      if (appointmentId) {
+        const appointment = findAppointment(appointmentId);
+        if (!appointment) {
+          return;
+        }
+        const candidate = {
+          kind: "update",
+          appointment: { ...appointment, date: dateKey, startSlot },
+          originalId: appointment.id
+        };
+        if (appointment.date === dateKey && appointment.startSlot === startSlot) {
+          showToast("预约位置没有变化。", "info");
+          return;
+        }
+        placeCandidate(candidate);
+      }
+    }
+
+    function parseFallbackData(value, prefix) {
+      return value.startsWith(`${prefix}:`) ? value.slice(prefix.length + 1) : "";
+    }
+
+    function makeCreateCandidate(template, dateKey, startSlot, durationSlots, options = {}) {
+      return {
+        kind: "create",
+        clearSelected: options.clearSelected === true,
+        appointment: {
+          id: createId("appointment"),
+          date: dateKey,
+          startSlot,
+          durationSlots,
+          templateId: template.id,
+          name: template.name,
+          color: template.color,
+          type: "one-on-one"
+        }
+      };
+    }
+
+    function getWeeklyCounts(dateKey, excludeAppointmentId = "") {
+      const date = fromDateKey(dateKey);
+      const weekKeys = new Set(getWeekDateKeys(date));
+      const weekDates = Array.from({ length: 7 }, (_, index) => addDays(getWeekStart(date), index));
+      const smallBooked = weekDates
+        .flatMap((weekDate) => getFixedCoursesForDate(weekDate))
+        .filter((course) => course.courseType === "small" && course.booked)
+        .length;
+      const largeBooked = weekDates
+        .flatMap((weekDate) => getFixedCoursesForDate(weekDate))
+        .filter((course) => (course.courseType === "largeA" || course.courseType === "largeB") && course.booked)
+        .length;
+      const oneOnOneBooked = state.appointments.filter((appointment) => (
+        appointment.id !== excludeAppointmentId && weekKeys.has(appointment.date)
+      )).length;
+      return { largeBooked, smallBooked, oneOnOneBooked };
+    }
+
+    function findConflicts(candidate) {
+      const target = candidate.appointment;
+      const targetEnd = target.startSlot + target.durationSlots;
+      const fixedCourses = getFixedCoursesForDate(fromDateKey(target.date));
+      const allCourses = [...state.appointments, ...fixedCourses];
+      return allCourses.filter((appointment) => {
+        if (appointment.id === target.id || appointment.date !== target.date) {
+          return false;
+        }
+        const appointmentEnd = appointment.startSlot + appointment.durationSlots;
+        return target.startSlot < appointmentEnd && targetEnd > appointment.startSlot;
+      });
+    }
+
+    function placeCandidate(candidate) {
+      const appointment = candidate.appointment;
+      if (!isTrainingDate(fromDateKey(appointment.date))) {
+        openTrainingBoundaryModal(candidate);
+        return;
+      }
+      const weeklyCounts = getWeeklyCounts(appointment.date, appointment.id);
+      if (weeklyCounts.oneOnOneBooked >= 1) {
+        openWeeklyLimitModal(candidate, "一对一", "每周最多预约1次。当前周的一对一时段已经存在，请调整现有预约或改到其他周。");
+        return;
+      }
+      if (appointment.startSlot < 0 || appointment.startSlot + appointment.durationSlots > SLOT_COUNT) {
+        const adjustedStart = Math.max(0, SLOT_COUNT - appointment.durationSlots);
+        openBoundaryModal(candidate, {
+          ...candidate,
+          appointment: { ...appointment, startSlot: adjustedStart }
+        });
+        return;
+      }
+      const conflicts = findConflicts(candidate);
+      if (conflicts.length > 0) {
+        openConflictModal(candidate, conflicts);
+        return;
+      }
+      applyCandidate(candidate, []);
+    }
+
+    function applyCandidate(candidate, conflicts) {
+      let appointment = { ...candidate.appointment };
+      if (conflicts.length > 0) {
+        const conflictIds = new Set(conflicts.filter((conflict) => conflict.type !== "fixed").map((conflict) => conflict.id));
+        state.appointments = state.appointments.filter((item) => !conflictIds.has(item.id));
+      }
+      if (candidate.kind === "update") {
+        const index = state.appointments.findIndex((item) => item.id === appointment.id);
+        if (index >= 0) {
+          state.appointments[index] = appointment;
+        }
+      } else {
+        state.appointments.push(appointment);
+      }
+      if (candidate.clearSelected) {
+        state.selectedTemplateId = null;
+      }
+      saveState();
+      renderAll();
+      showToast(`${appointment.name} 已安排在 ${formatDateTimeLabel(appointment.date, appointment.startSlot, appointment.durationSlots)}。`);
+    }
+
+    function openTrainingBoundaryModal(candidate) {
+      openModal({
+        title: "不在培训周期内",
+        body: `<p>一对一课程只能安排在 <strong>2026年8月19日至12月31日</strong> 的培训周期内。</p><div class="modal-note">当前放置位置为 ${formatDateTimeLabel(candidate.appointment.date, candidate.appointment.startSlot, candidate.appointment.durationSlots)}，请调整到培训周期内再预约。</div>`,
+        actions: [
+          { key: "cancel", label: "取消", className: "modal-cancel" },
+          { key: "adjust", label: "调整时间", className: "modal-adjust" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          adjust: () => {
+            closeModal();
+            showToast("已取消本次放置，请重新选择培训周期内的时间。", "info");
+          }
+        }
+      });
+    }
+
+    function openWeeklyLimitModal(candidate, label, message) {
+      openModal({
+        title: `${label}已达到周目标上限`,
+        body: `<p>${escapeHtml(message)}</p><div class="modal-note">每周目标为：2个场景、4节大班课、2节小班课、1次一对一。页面会阻止超出预约类课程的上限。</div>`,
+        actions: [
+          { key: "cancel", label: "取消本次预约", className: "modal-cancel" },
+          { key: "adjust", label: "调整已有安排", className: "modal-adjust" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          adjust: () => {
+            closeModal();
+            showToast("请先调整本周已有预约，再安排新的课程。", "info");
+          }
+        }
+      });
+    }
+
+    function openBoundaryModal(candidate, adjustedCandidate) {
+      const appointment = candidate.appointment;
+      const adjusted = adjustedCandidate.appointment;
+      const body = `
+        <p>“${escapeHtml(appointment.name)}”从 ${formatTimeBySlot(appointment.startSlot)} 开始，超出了当天 20:00 的课表范围。</p>
+        <p>系统不会自动改变你的意图。可以取消，或确认将它调整到当天能容纳完整时长的最近位置：</p>
+        <div class="modal-note">建议位置：${formatTimeRange(adjusted.startSlot, adjusted.durationSlots)}。你也可以关闭此提示后重新拖到更早的时间。</div>
+      `;
+      openModal({
+        title: "时间范围需要调整",
+        body,
+        actions: [
+          { key: "cancel", label: "取消", className: "modal-cancel" },
+          { key: "adjust", label: "重新调整", className: "modal-adjust" },
+          { key: "confirm", label: `放到 ${formatTimeBySlot(adjusted.startSlot)}`, className: "modal-confirm" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          adjust: () => {
+            closeModal();
+            showToast("已取消本次放置，请重新拖到合适的时间。", "info");
+          },
+          confirm: () => {
+            closeModal();
+            placeCandidate(adjusted);
+          }
+        }
+      });
+    }
+
+    function openConflictModal(candidate, conflicts) {
+      const appointment = candidate.appointment;
+      const hasFixedConflict = conflicts.some((conflict) => conflict.type === "fixed");
+      const conflictItems = conflicts.map((conflict) => (
+        `<li>${escapeHtml(conflict.name)} · ${formatDateTimeLabel(conflict.date, conflict.startSlot, conflict.durationSlots)}${conflict.type === "fixed" ? " · 固定课程" : ""}</li>`
+      )).join("");
+      const body = `
+        <p>目标位置 <strong>${formatDateTimeLabel(appointment.date, appointment.startSlot, appointment.durationSlots)}</strong> 已经有安排：</p>
+        <ul class="conflict-list">${conflictItems}</ul>
+        <p>${hasFixedConflict ? "其中包含附件中的固定课程，固定课程不能被覆盖、移动或删除。请选择取消或调整一对一时间。" : "这是一个有歧义的覆盖操作。请选择：确认覆盖会删除上面的冲突预约；调整位置会保留原安排并结束本次拖动。"}</p>
+      `;
+      const actions = [
+        { key: "cancel", label: "取消", className: "modal-cancel" },
+        { key: "adjust", label: "调整位置", className: "modal-adjust" }
+      ];
+      if (!hasFixedConflict) {
+        actions.push({ key: "confirm", label: "确认覆盖", className: "modal-danger" });
+      }
+      openModal({
+        title: "发现时间冲突",
+        body,
+        actions,
+        handlers: {
+          cancel: closeModal,
+          adjust: () => {
+            closeModal();
+            showToast("原有预约已保留，请重新选择空白位置。", "info");
+          },
+          confirm: () => {
+            closeModal();
+            applyCandidate(candidate, conflicts);
+          }
+        }
+      });
+    }
+
+    function toggleFixedCourseBooking(courseId) {
+      const course = findFixedCourse(courseId);
+      const isSmall = course?.courseType === "small";
+      const isLarge = course?.courseType === "largeA" || course?.courseType === "largeB";
+      if (!course || (!isSmall && !isLarge)) {
+        return;
+      }
+      if (state.bookedCourseIds.includes(courseId)) {
+        openCancelFixedCourseModal(course);
+        return;
+      }
+      const weeklyCounts = getWeeklyCounts(course.date);
+      if (isLarge && weeklyCounts.largeBooked >= 4) {
+        openWeeklyLimitModal({ appointment: course }, "大班课", "本周已经预约了4节大班课，不能再增加第5节。请先调整本周已有的大班预约。");
+        return;
+      }
+      if (isSmall && weeklyCounts.smallBooked >= 2) {
+        openWeeklyLimitModal({ appointment: course }, "小班课", "本周已经预约了2节小班课，不能再增加第3节。请先取消或调整本周已有的小班预约。");
+        return;
+      }
+      if (isLarge && getLargeCoursesForDate(fromDateKey(course.date)).some((sibling) => sibling.id !== course.id && sibling.booked)) {
+        openLargeCourseConflictModal(course);
+        return;
+      }
+      const conflicts = state.appointments.filter((appointment) => (
+        appointment.date === course.date &&
+        appointment.startSlot < course.startSlot + course.durationSlots &&
+        appointment.startSlot + appointment.durationSlots > course.startSlot
+      ));
+      if (conflicts.length > 0) {
+        openFixedCourseConflictModal(course, conflicts);
+        return;
+      }
+      confirmFixedCourseBooking(course);
+    }
+
+    function confirmFixedCourseBooking(course) {
+      if (!state.bookedCourseIds.includes(course.id)) {
+        state.bookedCourseIds.push(course.id);
+      }
+      saveState();
+      renderAll();
+      showToast(`${course.name} 已预约：${formatDateTimeLabel(course.date, course.startSlot, course.durationSlots)}。`);
+    }
+
+    function openCancelFixedCourseModal(course) {
+      openModal({
+        title: `取消这节${course.courseType === "small" ? "小班" : "大班"}课？`,
+        body: `<p>即将取消“${escapeHtml(course.name)}”的预约：<strong>${formatDateTimeLabel(course.date, course.startSlot, course.durationSlots)}</strong>。</p><div class="modal-note">取消后课程仍会保留在固定课表中，并恢复为未预约状态；如果是大班，同日另一时段会重新开放。</div>`,
+        actions: [
+          { key: "cancel", label: "保留预约", className: "modal-cancel" },
+          { key: "confirm", label: "确认取消", className: "modal-danger" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          confirm: () => {
+            state.bookedCourseIds = state.bookedCourseIds.filter((id) => id !== course.id);
+            saveState();
+            closeModal();
+            renderAll();
+            showToast(`${course.courseType === "small" ? "小班" : "大班"}预约已取消。`, "info");
+          }
+        }
+      });
+    }
+
+    function openLargeCourseConflictModal(course) {
+      openModal({
+        title: "同日大班已选择",
+        body: `<p>${formatDateShort(fromDateKey(course.date))} 已经预约了另一节大班课。</p><div class="modal-note">同一天的绿色 A 和黄色 B 只能选择一个。请先取消原预约，再选择这节课。</div>`,
+        actions: [
+          { key: "cancel", label: "保持原预约", className: "modal-cancel" }
+        ],
+        handlers: {
+          cancel: closeModal
+        }
+      });
+    }
+
+    function openFixedCourseConflictModal(course, conflicts) {
+      const conflictItems = conflicts.map((conflict) => (
+        `<li>${escapeHtml(conflict.name)} · ${formatDateTimeLabel(conflict.date, conflict.startSlot, conflict.durationSlots)}</li>`
+      )).join("");
+      openModal({
+        title: "预约时间与一对一冲突",
+        body: `<p>固定小班课的时间是 <strong>${formatDateTimeLabel(course.date, course.startSlot, course.durationSlots)}</strong>，该时段已有一对一安排：</p><ul class="conflict-list">${conflictItems}</ul><p>请选择取消本次小班预约，或确认预约小班并删除冲突的一对一。</p>`,
+        actions: [
+          { key: "cancel", label: "调整位置", className: "modal-adjust" },
+          { key: "confirm", label: "确认预约并替换", className: "modal-danger" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          confirm: () => {
+            const conflictIds = new Set(conflicts.map((conflict) => conflict.id));
+            state.appointments = state.appointments.filter((appointment) => !conflictIds.has(appointment.id));
+            closeModal();
+            confirmFixedCourseBooking(course);
+          }
+        }
+      });
+    }
+
+    function updateSelectionPreview() {
+      document.querySelectorAll(".slot.is-selected").forEach((slot) => slot.classList.remove("is-selected"));
+      if (!state.selection || state.selection.crossDate) {
+        return;
+      }
+      const start = Math.min(state.selection.startSlot, state.selection.endSlot);
+      const end = Math.max(state.selection.startSlot, state.selection.endSlot);
+      document.querySelectorAll(`.slot[data-date="${state.selection.date}"]`).forEach((slot) => {
+        const slotIndex = Number(slot.dataset.slot);
+        if (slotIndex >= start && slotIndex <= end) {
+          slot.classList.add("is-selected");
+        }
+      });
+    }
+
+    function getSlotFromPointer(event) {
+      return getSlotUnderPoint(event.clientX, event.clientY);
+    }
+
+    function handleSlotPointerDown(event) {
+      if (event.button !== 0 || event.target.closest(".appointment")) {
+        return;
+      }
+      state.selection = {
+        date: event.currentTarget.dataset.date,
+        startSlot: Number(event.currentTarget.dataset.slot),
+        endSlot: Number(event.currentTarget.dataset.slot),
+        moved: false,
+        crossDate: false
+      };
+      document.body.classList.add("is-selecting");
+      updateSelectionPreview();
+    }
+
+    function handleSelectionMove(event) {
+      if (!state.selection) {
+        return;
+      }
+      const slot = getSlotFromPointer(event);
+      if (!slot) {
+        return;
+      }
+      const dateKey = slot.dataset.date;
+      if (dateKey !== state.selection.date) {
+        state.selection.crossDate = true;
+        updateSelectionPreview();
+        return;
+      }
+      state.selection.crossDate = false;
+      state.selection.endSlot = Number(slot.dataset.slot);
+      state.selection.moved = state.selection.endSlot !== state.selection.startSlot;
+      updateSelectionPreview();
+    }
+
+    function handleSelectionEnd() {
+      if (!state.selection) {
+        return;
+      }
+      const selection = { ...state.selection };
+      state.selection = null;
+      document.body.classList.remove("is-selecting");
+      updateSelectionPreview();
+
+      if (selection.crossDate) {
+        showToast("范围选择目前需要在同一天内完成，请重新拖选。", "error");
+        return;
+      }
+
+      const startSlot = Math.min(selection.startSlot, selection.endSlot);
+      const endSlot = Math.max(selection.startSlot, selection.endSlot);
+      const durationSlots = endSlot - startSlot + 1;
+      if (!selection.moved && state.selectedTemplateId) {
+        const template = findTemplate(state.selectedTemplateId);
+        if (template) {
+          placeCandidate(makeCreateCandidate(template, selection.date, startSlot, DEFAULT_DURATION, { clearSelected: true }));
+        }
+        return;
+      }
+      openRangeModal(selection.date, startSlot, endSlot, state.selectedTemplateId);
+    }
+
+    function openRangeModal(dateKey, startSlot, endSlot, preselectedTemplateId = null) {
+      const durationSlots = endSlot - startSlot + 1;
+      const date = fromDateKey(dateKey);
+      const body = `
+        <div class="range-summary">${formatDateShort(date)}（${WEEKDAY_NAMES[(date.getDay() + 6) % 7]}） · ${formatTimeRange(startSlot, durationSlots)} · ${durationSlots * 15} 分钟</div>
+        <div class="modal-note">这段时间将创建一对一预约。它可以使用任意15分钟刻度，但每周最多安排1次，且不能覆盖固定课程。</div>
+      `;
+      openModal({
+        title: "把这段时间变成预约",
+        body,
+        rangeDraft: { dateKey, startSlot, durationSlots },
+        actions: [
+          { key: "cancel", label: "取消", className: "modal-cancel" },
+          { key: "confirm", label: "放入课表", className: "modal-confirm" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          confirm: confirmRangeModal
+        }
+      });
+    }
+
+    function confirmRangeModal() {
+      if (!state.modal?.rangeDraft) {
+        return;
+      }
+      const draft = state.modal.rangeDraft;
+      const template = findTemplate("one-on-one");
+      if (!template) {
+        showToast("一对一模板不存在，请刷新页面后重试。", "error");
+        return;
+      }
+      const candidate = makeCreateCandidate(template, draft.dateKey, draft.startSlot, draft.durationSlots, {
+        clearSelected: true
+      });
+      closeModal();
+      placeCandidate(candidate);
+    }
+
+    function startResize(event, appointmentId) {
+      event.preventDefault();
+      event.stopPropagation();
+      const appointment = findAppointment(appointmentId);
+      if (!appointment) {
+        return;
+      }
+      state.resize = {
+        id: appointmentId,
+        original: { ...appointment },
+        preview: { ...appointment }
+      };
+      state.previewAppointment = { ...appointment };
+      document.body.classList.add("is-resizing");
+      renderCalendar();
+    }
+
+    function handleResizeMove(event) {
+      if (!state.resize) {
+        return;
+      }
+      const slot = getSlotFromPointer(event);
+      if (!slot || slot.dataset.date !== state.resize.original.date) {
+        return;
+      }
+      const original = state.resize.original;
+      const endSlot = Number(slot.dataset.slot);
+      const durationSlots = Math.max(1, Math.min(SLOT_COUNT - original.startSlot, endSlot - original.startSlot + 1));
+      state.resize.preview = { ...original, durationSlots };
+      state.previewAppointment = state.resize.preview;
+      renderCalendar();
+    }
+
+    function handleResizeEnd() {
+      if (!state.resize) {
+        return;
+      }
+      const resize = state.resize;
+      const candidate = {
+        kind: "update",
+        appointment: { ...resize.preview },
+        originalId: resize.id
+      };
+      state.resize = null;
+      state.previewAppointment = null;
+      document.body.classList.remove("is-resizing");
+      if (candidate.appointment.durationSlots === resize.original.durationSlots) {
+        renderCalendar();
+        return;
+      }
+      placeCandidate(candidate);
+    }
+
+    function openEditModal(appointmentId) {
+      const appointment = findAppointment(appointmentId);
+      if (!appointment) {
+        return;
+      }
+      const body = `
+        <p>${formatDateTimeLabel(appointment.date, appointment.startSlot, appointment.durationSlots)}</p>
+        <div class="form-field">
+          <label for="editAppointmentName">预约名称</label>
+          <input id="editAppointmentName" type="text" maxlength="30" value="${escapeHtml(appointment.name)}">
+        </div>
+      `;
+      openModal({
+        title: "编辑预约",
+        body,
+        actions: [
+          { key: "cancel", label: "取消", className: "modal-cancel" },
+          { key: "confirm", label: "保存名称", className: "modal-confirm" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          confirm: () => {
+            const input = document.getElementById("editAppointmentName");
+            const name = input?.value.trim() || "";
+            if (!name) {
+              showToast("预约名称不能为空。", "error");
+              input?.focus();
+              return;
+            }
+            appointment.name = name;
+            saveState();
+            closeModal();
+            renderAll();
+            showToast("预约名称已更新。", "info");
+          }
+        },
+        onOpen: () => document.getElementById("editAppointmentName")?.focus()
+      });
+    }
+
+    function openDeleteModal(appointmentId) {
+      const appointment = findAppointment(appointmentId);
+      if (!appointment) {
+        return;
+      }
+      openModal({
+        title: "删除这个预约？",
+        body: `<p>即将删除“${escapeHtml(appointment.name)}”的安排：<strong>${formatDateTimeLabel(appointment.date, appointment.startSlot, appointment.durationSlots)}</strong>。</p><div class="modal-note">删除后不会影响待预约池中的类型。</div>`,
+        actions: [
+          { key: "cancel", label: "保留", className: "modal-cancel" },
+          { key: "confirm", label: "确认删除", className: "modal-danger" }
+        ],
+        handlers: {
+          cancel: closeModal,
+          confirm: () => {
+            state.appointments = state.appointments.filter((item) => item.id !== appointmentId);
+            saveState();
+            closeModal();
+            renderAll();
+            showToast("预约已删除。", "info");
+          }
+        }
+      });
+    }
+
+    function openIntroModal() {
+      openModal({
+        title: "先了解这张课表",
+        body: `
+          <p>这里保留了几个关键的交互决定，避免你第一次拖动时产生误解：</p>
+          <ul>
+            <li>默认周是系统当前日期所在周，日期按周一至周日展示；每次拖动都会吸附到 15 分钟刻度。</li>
+            <li>附件中的绿色/黄色大班课和灰色小班课会自动填入，固定日期和时间，不能编辑或拖动；大班和小班通过块上的“预约”按钮标记。</li>
+            <li>待预约池只有“一对一”，在同一天拖选多个格子会打开范围面板；跨天拖选会提示重新选择。</li>
+            <li>落到固定课程或已有预约上、超出 20:00、超出培训周期或达到每周上限时，页面只会弹出确认，不会替你覆盖或挪动。</li>
+            <li>“折叠空白小时”按当前周整小时压缩，折叠后仍保留可悬停的时间刻度。</li>
+          </ul>
+          <div class="modal-note">这是本页面的默认交互方案。如果你更习惯别的“范围拉取”或折叠方式，可以告诉我，我会按你的使用习惯调整。</div>
+        `,
+        actions: [
+          { key: "confirm", label: "明白，开始使用", className: "modal-confirm" }
+        ],
+        handlers: {
+          confirm: () => {
+            localStorage.setItem(INTRO_SEEN_KEY, "1");
+            closeModal();
+          }
+        }
+      });
+    }
+
+    function openCollapseConfirmation() {
+      openModal({
+        title: "确认折叠空白小时？",
+        body: `<p>当前周存在完全空白的小时或日期。打开后，空白小时会压缩成较窄的刻度带，完全没有课程的日期（例如周六、周日）会压缩成窄列；有课程或一对一预约的日期仍会完整展开。</p><div class="modal-note">这是视觉上的收缩，不会删除、移动或修改任何预约。</div>`,
+        actions: [
+          { key: "cancel", label: "保持展开", className: "modal-cancel" },
+          { key: "confirm", label: "确认折叠", className: "modal-confirm" }
+        ],
+        handlers: {
+          cancel: () => {
+            collapseToggle.checked = false;
+            closeModal();
+          },
+          confirm: () => {
+            state.collapseEmpty = true;
+            saveState();
+            closeModal();
+            renderAll();
+            showToast("空白小时已折叠。", "info");
+          }
+        }
+      });
+    }
+
+    function openModal(config) {
+      if (state.modal?.onClose) {
+        state.modal.onClose();
+      }
+      state.modal = config;
+      modalTitle.textContent = config.title;
+      modalBody.innerHTML = config.body || "";
+      modalActions.replaceChildren();
+      config.actions.forEach((action) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = action.className || "modal-cancel";
+        button.dataset.modalAction = action.key;
+        button.textContent = action.label;
+        modalActions.append(button);
+      });
+      modalLayer.classList.add("is-open");
+      config.onOpen?.();
+    }
+
+    function closeModal() {
+      if (!state.modal) {
+        return;
+      }
+      state.modal.onClose?.();
+      state.modal = null;
+      modalLayer.classList.remove("is-open");
+    }
+
+    function renderAll() {
+      renderCalendar();
+      renderPool();
+    }
+
+    document.getElementById("previousWeek").addEventListener("click", () => {
+      state.weekStart = addDays(state.weekStart, -7);
+      renderCalendar();
+    });
+
+    document.getElementById("nextWeek").addEventListener("click", () => {
+      state.weekStart = addDays(state.weekStart, 7);
+      renderCalendar();
+    });
+
+    document.getElementById("todayButton").addEventListener("click", () => {
+      state.weekStart = getWeekStart(new Date());
+      renderCalendar();
+      showToast("已回到当前周。", "info");
+    });
+
+    collapseToggle.addEventListener("change", () => {
+      if (collapseToggle.checked && (getFoldableHourCount() > 0 || getFoldableDayCount() > 0)) {
+        collapseToggle.checked = false;
+        openCollapseConfirmation();
+        return;
+      }
+      state.collapseEmpty = collapseToggle.checked;
+      saveState();
+      renderCalendar();
+      showToast(state.collapseEmpty ? "空白小时已折叠。" : "已恢复完整时间轴。", "info");
+    });
+
+    modalActions.addEventListener("click", (event) => {
+      const actionButton = event.target.closest("[data-modal-action]");
+      if (!actionButton || !state.modal) {
+        return;
+      }
+      const handler = state.modal.handlers?.[actionButton.dataset.modalAction];
+      handler?.();
+    });
+
+    document.getElementById("modalClose").addEventListener("click", closeModal);
+    modalLayer.addEventListener("click", (event) => {
+      if (event.target === modalLayer && state.modal?.allowBackdropClose !== false) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && state.modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("pointermove", (event) => {
+      handleSelectionMove(event);
+      handleResizeMove(event);
+    });
+
+    document.addEventListener("pointerup", () => {
+      handleSelectionEnd();
+      handleResizeEnd();
+    });
+
+    window.setInterval(updateNowLine, 60000);
+
+    loadState();
+    renderAll();
+    if (!localStorage.getItem(INTRO_SEEN_KEY)) {
+      window.setTimeout(openIntroModal, 260);
+    }
+  </script>
+</body>
+</html>
